@@ -28,11 +28,11 @@ const MenuItem = (props: any) => {
 
     const arrowStyle = { fontSize: '10px' }
 
-    return <li style={{ height: isOpen ? '' : '60px' }} onClick={toggleOpen} className='transer'>
+    return <li style={{ height: isOpen ? '' : '60px' }} onClick={toggleOpen} className={isOpen ? 'open' : ''}>
         <div className='menu-item'>
             {props.icon}
             {isFold ? '' : <>
-                <div style={{ fontSize: 12 ,color: isOpen ? '#fff' : '#hsla(0, 0%, 100%, .65)'}}>
+                <div style={{ fontSize: 12, color: isOpen ? '#fff' : '#hsla(0, 0%, 100%, .65)' }}>
                     {props.title}
                 </div>
                 <span className='arrow-icon'>

@@ -31,29 +31,9 @@ const Content = (props: any) => {
     const [form] = Form.useForm();
 
     useEffect(() => {
-        let tableListDataSource = [];
-        for (let i = 0; i < 46; i += 1) {
-            tableListDataSource.push({
-                key: i,
-                disabled: i % 6 === 0,
-                href: 'https://ant.design',
-                avatar: [
-                    'https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png',
-                    'https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png',
-                ][i % 2],
-                no: `TradeCode ${i}`,
-                title: `⼀个任务名称 ${i}`,
-                owner: '曲丽丽',
-                description: '这是⼀段描述',
-                callNo: Math.floor(Math.random() * 1000),
-                status: Math.floor(Math.random() * 10) % 4,
-                updatedAt: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
-                createdAt: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
-                progress: Math.ceil(Math.random() * 100),
-            });
-        };
-
-        setDataSource(tableListDataSource);
+        axios.get("http://localhost:3000/getList.json").then(res => {
+            setDataSource(res.data);
+        })
     }, [])
 
     const onFinish = async (values: any) => {
@@ -78,7 +58,8 @@ const Content = (props: any) => {
         setVisible(true)
     }
 
-    const format = (date: Date, format: string) => {
+    const format = (dateSource: any, format: string) => {
+        const date = new Date(dateSource)
         var o = {
             "M+": date.getMonth() + 1, //month
             "d+": date.getDate(), //day

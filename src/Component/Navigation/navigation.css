@@ -1,0 +1,11 @@
+.navigation-container {
+    background-color: #001529;
+    transition: all 0.4s ease-in-out;
+}
+
+.navigate-list {
+    margin-top: 80px;
+    color: #fff;
+    list-style: none;
+    padding-left: 0px;
+}

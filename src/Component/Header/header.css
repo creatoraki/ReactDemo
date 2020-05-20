@@ -1,0 +1,67 @@
+.header-container {
+    height: 80px;
+    display: flex;
+    position: fixed;
+    background: #fff;
+    width: 100%;
+    box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+    z-index: 1000;
+}
+
+.fold-btn {
+    font-size: 20px;
+    line-height: 80px!important;
+    margin-left: 10px;
+    outline: none;
+}
+
+.fold-btn svg {
+    cursor: pointer
+}
+
+.logo {
+    background-color: #001529;
+    color: #fff;
+    display: flex;
+    transition: all 0.4s ease-in-out;
+}
+
+.logo-text {
+    color: #fff;
+    font-weight: 600;
+    font-size: 18px;
+    vertical-align: middle;
+    animation: fade-in;
+    animation-duration: .3s;
+    line-height: 68px;
+    margin-left: 6px;
+    overflow-x: hidden;
+}
+
+span::-webkit-scrollbar {
+    display: none!important;
+}
+
+.header-float-right {
+    display: flex;
+    float: right;
+    height: 80px;
+    margin-left: auto;
+    overflow: hidden;
+}
+
+.right-icon {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 12px;
+    cursor: pointer;
+}
+
+.icon-text {
+    color: rgba(0, 0, 0, .65);
+    vertical-align: middle;
+    font-size: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, segoe ui, Roboto, helvetica neue, Arial, noto sans, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol, noto color emoji;
+    font-variant: tabular-nums;
+}

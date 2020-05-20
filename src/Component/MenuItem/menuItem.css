@@ -1,0 +1,21 @@
+.menu-item {
+    display: flex;
+    line-height: 60px;
+    font-size: 14px;
+    opacity: 1;
+    transition: opacity .3s cubic-bezier(.645, .045, .355, 1), width .3s cubic-bezier(.645, .045, .355, 1);
+    color: hsla(0, 0%, 100%, .65);
+    cursor: pointer;
+    position: relative;
+    margin-left: 20px;
+}
+
+.menu-item:hover {
+    color: #fff;
+}
+
+.arrow-icon {
+    position: absolute;
+    right: 10px;
+    top: 0px;
+}

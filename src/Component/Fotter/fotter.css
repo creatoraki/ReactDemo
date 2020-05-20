@@ -1,0 +1,11 @@
+.fotter-container {
+    margin-top: 20px;
+}
+
+.fotter {
+    width: 70%;
+    margin: auto;
+    text-align: center;
+    color: rgba(0, 0, 0, .45);
+    font-size: 14px;
+}

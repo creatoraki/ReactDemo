@@ -25,7 +25,7 @@ jobs:
           crane pull clickhouse/clickhouse-server:24.1.2-alpine clickhouse.tar
 
           echo "Downloading Zookeeper..."
-          crane pull bitnami/zookeeper:3.7.2 zookeeper.tar
+          crane pull bitnami/zookeeper:3.7-debian-11 zookeeper.tar
 
           echo "Downloading SigNoz..."
           crane pull signoz/signoz:v0.87.0 signoz.tar
@@ -63,14 +63,14 @@ jobs:
 
             包含的镜像（基于 /opt/signoz/deploy/docker/docker-compose.yaml）:
             - clickhouse/clickhouse-server:24.1.2-alpine
-            - bitnami/zookeeper:3.7.2
+            - bitnami/zookeeper:3.7-debian-11
             - signoz/signoz:v0.87.0
             - signoz/signoz-otel-collector:v0.111.42
             - signoz/signoz-schema-migrator:v0.111.42
 
             下载后在服务器上执行:
             ```bash
-            # 1. 下���文件到服务器
+            # 1. 下文件到服务器
             cd /opt/signoz
             mkdir -p images
             cd images

@@ -1,0 +1,91 @@
+name: Download SigNoz Docker Images
+
+on:
+  workflow_dispatch:  # 手动触发
+
+jobs:
+  download-images:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install crane
+        run: |
+          VERSION=v0.19.1
+          curl -sL "https://github.com/google/go-containerregistry/releases/download/${VERSION}/go-containerregistry_Linux_x86_64.tar.gz" | tar xz -C /usr/local/bin/ crane
+
+      - name: Download SigNoz images
+        run: |
+          mkdir -p signoz-images
+          cd signoz-images
+
+          echo "Downloading ClickHouse..."
+          crane pull clickhouse/clickhouse-server:24.1.2-alpine clickhouse.tar
+
+          echo "Downloading Zookeeper..."
+          crane pull bitnami/zookeeper:3.7.1 zookeeper.tar
+
+          echo "Downloading SigNoz Frontend..."
+          crane pull signoz/signoz:v0.87.0 signoz.tar
+
+          echo "Downloading SigNoz OTel Collector..."
+          crane pull signoz/signoz-otel-collector:v0.111.42 otel-collector.tar
+
+          echo "Downloading SigNoz Schema Migrator..."
+          crane pull signoz/signoz-schema-migrator:v0.111.42 schema-migrator.tar
+
+          ls -lh
+
+      - name: Create archive
+        run: |
+          cd signoz-images
+          tar -czf ../signoz-images.tar.gz *.tar
+          cd ..
+          ls -lh signoz-images.tar.gz
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: signoz-images
+          path: signoz-images.tar.gz
+          retention-days: 7
+
+      - name: Create Release
+        if: github.event_name == 'workflow_dispatch'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: signoz-images-${{ github.run_number }}
+          name: SigNoz Images (${{ github.run_number }})
+          body: |
+            SigNoz Docker Images Bundle
+
+            包含的镜像:
+            - clickhouse/clickhouse-server:24.1.2-alpine
+            - bitnami/zookeeper:3.7.1
+            - signoz/signoz:v0.87.0
+            - signoz/signoz-otel-collector:v0.111.42
+            - signoz/signoz-schema-migrator:v0.111.42
+
+            下载后解压步骤:
+            ```bash
+            # 1. 下载文件到服务器
+            wget https://github.com/你的用户名/org-efficiency-platform/releases/download/signoz-images-xxx/signoz-images.tar.gz
+
+            # 2. 解压
+            tar -xzf signoz-images.tar.gz
+
+            # 3. 导入镜像
+            docker load -i clickhouse.tar
+            docker load -i zookeeper.tar
+            docker load -i signoz.tar
+            docker load -i otel-collector.tar
+            docker load -i schema-migrator.tar
+
+            # 4. 验证
+            docker images | grep -E "clickhouse|zookeeper|signoz"
+            ```
+          files: signoz-images.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
